@@ -1,0 +1,2 @@
+# Hotbox
+A discussion platform
