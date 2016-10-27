@@ -1,0 +1,2 @@
+This is the Django Base Project
+All created apps and api's will be linked here
