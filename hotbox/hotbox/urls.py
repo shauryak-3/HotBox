@@ -15,7 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from signup.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^logout/$', logout_page),
+    #url(r'^accounts/login/$', 'django.contrib.auth.views.login'), # If user is not login it will redirect to login page
+    url(r'^register/$', register),
+    url(r'^register/success/$', register_success),
+    url(r'^home/$', home),
 ]
+
+
+
+ 
