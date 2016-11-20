@@ -176,4 +176,4 @@ def confidence(ups, downs):
     if ups + downs == 0:
         return 0
     else:
-	return _confidence(ups, downs)
+        return _confidence(ups,downs)
