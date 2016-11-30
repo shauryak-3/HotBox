@@ -34,7 +34,11 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'backdb.apps.BackdbConfig',
+<<<<<<< HEAD
 #    'signup.apps.SignupConfig',
+=======
+##    'signup.apps.SignupConfig',
+>>>>>>> e292534e2e3b6b30731e540a08548f812175e320
 #    'posts.apps.PostsConfig',
 #    'threads.apps.ThreadsConfig',
 #    'forums.apps.ForumsConfig',
