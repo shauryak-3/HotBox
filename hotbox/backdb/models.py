@@ -2,9 +2,13 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-import datetime
+from datetime import datetime, timedelta
+
+
 
 from math import sqrt
+
+from django.core.urlresolvers import reverse
 
 
 # Create your models here.
@@ -22,7 +26,8 @@ class User (models.Model) :
 	ph_no = models.CharField(max_length = 14) ### As international codes can have 0 - 4 chars and phones have a max of 10 chars
 	email = models.EmailField(max_length = 254, unique = True) ### email id, has to be unique, will do Queryset Check down bellow
 	bio = models.TextField(max_length = 3000)
-	subs_user = models.ManyToManyField("self")
+	#subs_user = models.ManyToManyField("self")
+	"""
 	def clean_handle(self):
 		try:
 			handle = User.objects.get(handle__iexact=self.cleaned_data['handle'])
@@ -38,9 +43,9 @@ class User (models.Model) :
 		return self.cleaned_data
 #	subs_forum = models.ManyToManyField(Forums)
 #	subs_subforum = models.ManyToManyField(Subforums)
-#	subs_thread = models.ManyToManyField(Threads)
+#	subs_thread = models.ManyToManyField(Threads)"""
 
-	def __str__(self):              # __unicode__ on Python 2
+	def __unicode__(self):              # __unicode__ on Python 2
 		return self.handle
 
 class User_qualifications (models.Model) :
@@ -48,7 +53,7 @@ class User_qualifications (models.Model) :
 	qual = models.CharField(max_length = 50) ### Title of Qualification
 	desc = models.TextField(max_length = 300) ### Short description of qualification
 
-	def __str__(self):              # __unicode__ on Python 2
+	def __unicode__(self):              # __unicode__ on Python 2
 		return self.qual
 
 class User_achievements (models.Model) : 
@@ -56,7 +61,7 @@ class User_achievements (models.Model) :
 	achv = models.CharField(max_length = 50) ### Title of Achievement
 	desc = models.TextField(max_length = 300) ### Short description of achievement
 
-	def __str__(self):              # __unicode__ on Python 2
+	def __unicode__(self):              # __unicode__ on Python 2
 		return self.achv
 
 class Forums (models.Model) :
@@ -68,7 +73,7 @@ class Forums (models.Model) :
 	rating_rel = models.BigIntegerField(default = 0)
 	rating_pop = models.BigIntegerField(default = 0)
 
-	def __str__(self):              # __unicode__ on Python 2
+	def __unicode__(self):              # __unicode__ on Python 2
 		return self.title
 
 class Subforums (models.Model) : 
@@ -82,7 +87,7 @@ class Subforums (models.Model) :
 	rating_rel = models.BigIntegerField(default = 0)
 	rating_pop = models.BigIntegerField(default = 0)
 
-	def __str__(self):              # __unicode__ on Python 2
+	def __unicode__(self):              # __unicode__ on Python 2
 		return self.title
 
 class Threads (models.Model) :
@@ -96,7 +101,7 @@ class Threads (models.Model) :
 	rating_rel = models.BigIntegerField(default = 0)
 	rating_pop = models.BigIntegerField(default = 0)
 
-	def __str__(self):              # __unicode__ on Python 2
+	def __unicode__(self):              # __unicode__ on Python 2
 		return self.title
 
 class Posts (models.Model) :
@@ -109,7 +114,7 @@ class Posts (models.Model) :
 	rating_rel = models.BigIntegerField(default = 0)
 	rating_pop = models.BigIntegerField(default = 0)
 
-	def __str__(self):              # __unicode__ on Python 2
+	def __unicode__(self):              # __unicode__ on Python 2
 		return self.text
 
 
@@ -128,9 +133,9 @@ class tag_to_subforum (models.Model) :
 	tag = models.ForeignKey(tags, on_delete=models.CASCADE)
 	subforum = models.ForeignKey(Subforums, on_delete=models.CASCADE)
 
-class tag_to_thread (models.Model) :
+class tag_to_forum (models.Model) :
 	tag = models.ForeignKey(tags, on_delete=models.CASCADE)
-	thread = models.ForeignKey(Threads, on_delete=models.CASCADE)
+	thread = models.ForeignKey(Forums, on_delete=models.CASCADE)
 
 
 #class post_thread_rel (models.Model) :
@@ -139,23 +144,27 @@ class tag_to_thread (models.Model) :
 
 #class 
 
-#class subs_users (models.Model) :
-#	handle = 
-#	subs_handle = 
+class subs_users (models.Model) :
+	handle =  models.ForeignKey(User, related_name='%(class)s_subber')
+	subs_handle =  models.ForeignKey(User, related_name='%(class)s_subbed')
 
-#class subs_thread (models.Model) :
-#	handle = 
-#	subs_title = 
+class subs_thread (models.Model) :
+	handle = models.ForeignKey(User, on_delete=models.CASCADE)
+	subs_title = models.ForeignKey(Threads, on_delete=models.CASCADE)
 	
-#class subs_subforum (models.Model) :
-#	handle = 
-#	subs_title = 
+class subs_subforum (models.Model) :
+	handle = models.ForeignKey(User, on_delete=models.CASCADE)
+	subs_title = models.ForeignKey(Subforums, on_delete=models.CASCADE)
 
-#class subs_forum (models.Model) :
-#	handle = 
-#	subs_title = 
+class subs_forum (models.Model) :
+	handle = models.ForeignKey(User, on_delete=models.CASCADE)
+	subs_title = models.ForeignKey(Forums, on_delete=models.CASCADE)
 
+epoch = datetime(1970, 1, 1)
 
+def epoch_seconds(date):
+    td = date - epoch
+    return td.days * 86400 + td.seconds + (float(td.microseconds) / 1000000)
 
 def _confidence(ups, downs):
     n = ups + downs
@@ -177,3 +186,4 @@ def confidence(ups, downs):
         return 0
     else:
         return _confidence(ups,downs)
+
