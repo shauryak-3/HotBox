@@ -34,11 +34,11 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'backdb.apps.BackdbConfig',
-    'signup.apps.SignupConfig',
-    'posts.apps.PostsConfig',
-    'threads.apps.ThreadsConfig',
-    'forums.apps.ForumsConfig',
-    'subforums.apps.SubforumsConfig',
+##    'signup.apps.SignupConfig',
+#    'posts.apps.PostsConfig',
+#    'threads.apps.ThreadsConfig',
+#    'forums.apps.ForumsConfig',
+#    'subforums.apps.SubforumsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
