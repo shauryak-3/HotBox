@@ -1,0 +1,9 @@
+In BACKDB : 
+
+Home, Register and Profile page will extends header.html
+
+Forum pages will extend fheader.html
+
+Subforums will extend sheader.html
+
+Thread will extend theader.html
