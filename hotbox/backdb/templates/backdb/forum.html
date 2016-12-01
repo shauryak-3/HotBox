@@ -55,9 +55,14 @@
 		  <div class="col-sm-10">
 		  
 			<div class='container-fluid'>
-			<br><br>
-			{% for forum in object_list %}
-		<h5>{{ forum.pub_date|pub_date:"d-m-Y" }}<a href="/blog/{{forum.id}}">  {{ post.title }} </a>(Up: {{forum.upvotes}}, Down:{{forum.downvotes}}</h5>
+			<br><br><table style="width:100%">
+  			<tr><b><th>Forum</th>
+    	<th>Upvotes</th>
+    	<th>Downvotes</th>
+    	<th>Founded On</th><th>Author</th></b></tr>
+			{% for forum in object_list %}<tr>
+		<h5><th>
+			<a href="/subforum/{{'forum.id'}}"> {{ forum.title }} </a></th> <th>{{forum.upvotes}}</th> <th>{{forum.downvotes}}</th> <th>{{forum.pub_date|date:"d M Y"}}</th><th>{{forum.author}}</th></h5></tr>
 			{% endfor %}
 	
 	
@@ -66,9 +71,6 @@
 		</div> 
 	</div>
 	<footer>
-		<div class="container-fluid" style='margin-left:15px'>
-			<p><a href="#" target="blank">Contact</a> | <a href="#" target="blank">LinkedIn</a> | <a href="#" target="blank">Twitter</a> | <a href="#" target="blank">Google+</a></p>
-		</div>
 	</footer>
 
 </body>
