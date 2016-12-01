@@ -36,12 +36,12 @@ def subs(request) :
 def forum(request) :
 	name = request.get('')
 	return render(request, 'backdb/forum.html')
-"""
-def forum(request) :
-	return render(request, 'backdb/forum.html')
-"""
+
+def threadlist(request) :
+	return render(request, 'backdb/threadlist.html')
+
 def subforum(request) :
-	username = request.get('username')
-	return render(request, 'backdb/prsubforum.html')
+#	username = request.get('username')
+	return render(request, 'backdb/subforum.html')
 
 #Bhardwaj comment
